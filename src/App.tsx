@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import OrchestrationBoard from "./components/OrchestrationBoard";
 import StoryViewer from "./components/StoryViewer";
 import RoiCalculator from "./components/RoiCalculator";
-import { 
+import {
   Dribbble, 
   Layers, 
   FileText, 
@@ -23,11 +23,52 @@ import {
   Coins
 } from "lucide-react";
 
+type Language = "en" | "es";
+
+const translations = {
+  en: {
+    languageLabel: "Language",
+    intro: "Sales Architecture Interface",
+    title: "MEDDPICC Boardroom Orchestrator",
+    version: "v4.0",
+    client: "Client Account",
+    footprint: "Total Footprint",
+    solution: "Solution Suite",
+    score: "Deal Scorecard",
+    chessboard: "MEDDPICC Chessboard",
+    roi: "Microsoft Stack ROI Model",
+    expand: "Expand Case Narrative",
+    session: "SESSION",
+    active: "ACTIVE",
+    target: "TARGET: ENTERPRISE SEGMENT",
+    footer: "Mastering the MEDDPICC Framework with Precision.",
+  },
+  es: {
+    languageLabel: "Idioma",
+    intro: "Interfaz de Arquitectura de Ventas",
+    title: "Orquestador del Salón de MEDDPICC",
+    version: "v4.0",
+    client: "Cuenta del Cliente",
+    footprint: "Huella Total",
+    solution: "Suite de Soluciones",
+    score: "Panel de Oportunidad",
+    chessboard: "Tablero MEDDPICC",
+    roi: "Modelo ROI de Microsoft Stack",
+    expand: "Ampliar Narrativa del Caso",
+    session: "SESIÓN",
+    active: "ACTIVA",
+    target: "OBJETIVO: SEGMENTO EMPRESARIAL",
+    footer: "Dominando el marco MEDDPICC con precisión.",
+  },
+};
+
 export default function App() {
   const [highlightKeywords, setHighlightKeywords] = useState<string[]>([]);
   const [activeParagraphId, setActiveParagraphId] = useState<string | null>(null);
   const [isStoryMinimized, setIsStoryMinimized] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<"chessboard" | "roi">("chessboard");
+  const [language, setLanguage] = useState<Language>("en");
+  const t = translations[language];
 
   const handleItemClick = (keywords: string[]) => {
     setHighlightKeywords(keywords);
@@ -55,32 +96,46 @@ export default function App() {
       <header className="bg-[#0e1015]/90 border-b border-slate-800/80 sticky top-0 z-50 backdrop-blur shrink-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col lg:flex-row items-center justify-between gap-4">
           <div>
-            <h1 className="text-[10px] uppercase tracking-[0.4em] text-slate-500 mb-1">Sales Architecture Interface</h1>
+            <h1 className="text-[10px] uppercase tracking-[0.4em] text-slate-500 mb-1">{t.intro}</h1>
             <div className="text-3xl font-serif italic text-white tracking-tight">
-              MEDDPICC Boardroom Orchestrator <span className="text-sky-500 text-lg not-italic font-sans font-bold ml-2">v4.0</span>
+              {t.title} <span className="text-sky-500 text-lg not-italic font-sans font-bold ml-2">{t.version}</span>
             </div>
           </div>
 
-          {/* Deal Metadata Hud */}
-          <div className="flex items-center gap-3 bg-[#13161e]/80 p-2.5 rounded-2xl border border-slate-800/90 text-[10px] sm:text-xs">
-            <div className="px-3 py-1 text-center border-r border-slate-800">
-              <span className="block text-slate-500 font-mono text-[9px] uppercase tracking-wider">Client Account</span>
-              <span className="font-semibold text-sky-400">Coca-Cola HBC</span>
-            </div>
-            <div className="px-3 py-1 text-center border-r border-slate-800">
-              <span className="block text-slate-500 font-mono text-[9px] uppercase tracking-wider">Total Footprint</span>
-              <span className="font-semibold text-slate-200">29 Warehouses, 17 Countries</span>
-            </div>
-            <div className="px-3 py-1 text-center border-r border-slate-800">
-              <span className="block text-slate-500 font-mono text-[9px] uppercase tracking-wider">Solution Suite</span>
-              <span className="font-semibold text-slate-200">Microsoft Security Stack</span>
-            </div>
-            <div className="px-3 py-1 text-center">
-              <span className="block text-slate-500 font-mono text-[9px] uppercase tracking-wider">Deal Scorecard</span>
-              <span className="font-semibold text-emerald-400 flex items-center gap-1">
-                <Trophy className="w-3 h-3 text-amber-400" />
-                36/40 (90%)
-              </span>
+          <div className="flex flex-col lg:items-end gap-3">
+            <label className="flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-slate-400">
+              <span>{t.languageLabel}</span>
+              <select
+                value={language}
+                onChange={(event) => setLanguage(event.target.value as Language)}
+                className="rounded-full border border-slate-700 bg-[#0f1218] px-3 py-1.5 text-[11px] font-semibold text-slate-200 outline-none ring-0"
+              >
+                <option value="en">English</option>
+                <option value="es">Español</option>
+              </select>
+            </label>
+
+            {/* Deal Metadata Hud */}
+            <div className="flex items-center gap-3 bg-[#13161e]/80 p-2.5 rounded-2xl border border-slate-800/90 text-[10px] sm:text-xs">
+              <div className="px-3 py-1 text-center border-r border-slate-800">
+                <span className="block text-slate-500 font-mono text-[9px] uppercase tracking-wider">{t.client}</span>
+                <span className="font-semibold text-sky-400">Coca-Cola HBC</span>
+              </div>
+              <div className="px-3 py-1 text-center border-r border-slate-800">
+                <span className="block text-slate-500 font-mono text-[9px] uppercase tracking-wider">{t.footprint}</span>
+                <span className="font-semibold text-slate-200">29 Warehouses, 17 Countries</span>
+              </div>
+              <div className="px-3 py-1 text-center border-r border-slate-800">
+                <span className="block text-slate-500 font-mono text-[9px] uppercase tracking-wider">{t.solution}</span>
+                <span className="font-semibold text-slate-200">Microsoft Security Stack</span>
+              </div>
+              <div className="px-3 py-1 text-center">
+                <span className="block text-slate-500 font-mono text-[9px] uppercase tracking-wider">{t.score}</span>
+                <span className="font-semibold text-emerald-400 flex items-center gap-1">
+                  <Trophy className="w-3 h-3 text-amber-400" />
+                  36/40 (90%)
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -101,7 +156,7 @@ export default function App() {
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
-              <span>MEDDPICC Chessboard</span>
+              <span>{t.chessboard}</span>
             </button>
             <button
               onClick={() => setActiveTab("roi")}
@@ -112,7 +167,7 @@ export default function App() {
               }`}
             >
               <Coins className="w-3.5 h-3.5" />
-              <span>Microsoft Stack ROI Model</span>
+              <span>{t.roi}</span>
             </button>
           </div>
 
@@ -134,7 +189,7 @@ export default function App() {
           >
             <BookOpen className="w-4 h-4 text-sky-400 group-hover:scale-110 transition-transform" />
             <span className="text-[9px] uppercase tracking-[0.3em] font-extrabold lg:[writing-mode:vertical-lr] lg:rotate-180 whitespace-nowrap">
-              Expand Case Narrative
+              {t.expand}
             </span>
           </button>
         ) : (
@@ -153,12 +208,12 @@ export default function App() {
       <footer className="bg-[#07080b] border-t border-slate-900 py-4 text-center shrink-0">
         <div className="max-w-7xl mx-auto px-4 text-[10px] text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3 tracking-widest uppercase">
           <div className="flex gap-4 items-center">
-            <span className="text-slate-400">SESSION: <span className="text-emerald-400">ACTIVE</span></span>
+            <span className="text-slate-400">{t.session}: <span className="text-emerald-400">{t.active}</span></span>
             <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span>
-            <span>TARGET: ENTERPRISE SEGMENT</span>
+            <span>{t.target}</span>
           </div>
           <div className="font-serif italic lowercase tracking-normal text-slate-400 text-xs">
-            Mastering the MEDDPICC Framework with Precision.
+            {t.footer}
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[9px] text-slate-600 font-sans tracking-tight">Quick Story:</span>
