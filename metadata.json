@@ -1,0 +1,6 @@
+{
+  "name": "MEDDPICC Interactive Boardroom",
+  "description": "An interactive boardroom chessboard to map, reshuffle, and validate MEDDPICC framework options linked live to the Microsoft x Coca-Cola HBC success story.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
